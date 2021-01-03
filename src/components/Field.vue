@@ -5,7 +5,7 @@
     <div class="row"
          v-for="(row, i) in field"
          :key="i">
-      <div class="cell"
+      <div :class="['cell', cell.style]"
            v-for="(cell, j) in row"
            :key="j"></div>
     </div>
@@ -45,6 +45,14 @@
         margin: @cell-margin;
 
         background-color: @theme-light;
+
+        &.snake {
+          background-color: lighten(@theme-accent1, 10%);
+        }
+
+        &.snake-head {
+          background-color: @theme-accent1;
+        }
       }
     }
   }

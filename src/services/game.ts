@@ -10,7 +10,8 @@ export class Game {
                 snakeLength = 1,
   }) {
     this.initField(fieldSize);
-    this.initSnake(snakeLength);
+    this.initSnake(snakeLength, fieldSize);
+    this.addSnake();
   }
 
   initField(fieldSize: number) {
@@ -24,7 +25,16 @@ export class Game {
     }
   }
 
-  initSnake(snakeLength: number) {
-    this.snake = new Snake(snakeLength);
+  initSnake(snakeLength: number, fieldSize: number) {
+    this.snake = new Snake(snakeLength, fieldSize);
+  }
+
+  addSnake() {
+    this.snake.body.forEach(({x, y}, i) => {
+      this.field[y][x] = {
+        type: 'snake',
+        style: i ? 'snake' : 'snake-head',
+      }
+    });
   }
 }
