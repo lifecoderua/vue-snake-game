@@ -4,13 +4,14 @@
     <p>
       A little red hood snake game I am.
     </p>
-    <Field :field="field"/>
+    <Field :field="game.field"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Field from '@/components/Field.vue';
+import {Game as GameCore} from '@/services/game.ts';
 
 const FIELD_SIZE = 15;
 
@@ -22,20 +23,20 @@ const FIELD_SIZE = 15;
   },
 })
 export default class Game extends Vue {
-  field: any[][] = [];
+  // field: any[][] = [];
+
+  game!: GameCore;
+
 
   created() {
     console.log('Game init');
-    for (let i = 0; i < FIELD_SIZE; i++) {
-      const row = [];
-      for (let j = 0; j < FIELD_SIZE; j++) {
-        row.push({});
-      }
 
-      this.field.push(row);
-    }
+    this.game = new GameCore({
+      fieldSize: FIELD_SIZE,
+      snakeLength: 3,
+    });
 
-    console.log('Initialized with', this.field);
+    console.log('Initialized with', this.game);
   }
 }
 </script>
