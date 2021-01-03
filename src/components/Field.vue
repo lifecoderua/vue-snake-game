@@ -25,7 +25,11 @@
   }
 </script>
 
-<style lang="less">
+<style
+  scoped
+  lang="less">
+  @import "../assets/common";
+
   @cell-size: 20px;
   @cell-margin: 1px;
 
@@ -40,7 +44,7 @@
         height: @cell-size;
         margin: @cell-margin;
 
-        background-color: deepskyblue;
+        background-color: @theme-light;
       }
     }
   }
