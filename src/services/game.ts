@@ -31,10 +31,13 @@ export class Game {
   }
 
   generateMeat() {
-    this.meatPosition = {
-      x: 4,
-      y: 4,
-    };
+    do {
+      this.meatPosition = {
+        x: Math.floor(Math.random() * this.fieldSize),
+        y: Math.floor(Math.random() * this.fieldSize),
+      };
+    } while (this.field[this.meatPosition.y][this.meatPosition.x].type);
+
 
     this.field[this.meatPosition.y][this.meatPosition.x] = {
       type: 'meat',
@@ -90,7 +93,7 @@ export class Game {
     if (this.field[y][x].type === 'meat') {
       this.snake.grow();
       // TODO: put new piece
-      // this.generateMeat();
+      this.generateMeat();
     }
   }
 
