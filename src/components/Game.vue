@@ -29,7 +29,7 @@ export default class Game extends Vue {
 
   field!: any;
 
-  created() {
+  initGame() {
     console.log('Game init');
 
     this.game = new GameCore({
@@ -40,6 +40,12 @@ export default class Game extends Vue {
     this.field = {
       ...this.game.field,
     };
+
+    this.$forceUpdate();
+  }
+
+  created() {
+    this.initGame();
 
     document.addEventListener('keydown', this.keyboardHandler);
 
@@ -54,6 +60,11 @@ export default class Game extends Vue {
   }
 
   keyboardHandler(e: KeyboardEvent) {
+    if (this.game.snake.collision) {
+      this.initGame();
+      return;
+    }
+
     const controlCodes: any = {
       ArrowUp: Direction.up,
       ArrowDown: Direction.down,
