@@ -84,6 +84,13 @@ export class Game {
   private checkCollision(x: number, y: number) {
     if (COLLIDABLE_TYPES.includes(this.field[y][x].type)) {
       this.onCollision();
+      return;
+    }
+
+    if (this.field[y][x].type === 'meat') {
+      this.snake.grow();
+      // TODO: put new piece
+      // this.generateMeat();
     }
   }
 

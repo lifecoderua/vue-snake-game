@@ -22,6 +22,8 @@ export class Snake {
   // [head, body1, ..., tail]
   body: any[] = [];
 
+  growOnStep = false;
+
   constructor(length = 1, fieldSize = 10) {
     // TODO: support greater snake length
     const startPointX = Math.floor(fieldSize / 2);
@@ -29,6 +31,7 @@ export class Snake {
 
     this.collision = false;
     this.fieldSize = fieldSize;
+    this.growOnStep = false;
 
     for (let i = 0; i < length; i++) {
       this.body.push({
@@ -46,6 +49,10 @@ export class Snake {
 
   get head() {
     return this.body[0];
+  }
+
+  grow() {
+    this.growOnStep = true;
   }
 
   nextStep() {
@@ -66,6 +73,9 @@ export class Snake {
     }
 
     this.body.unshift(newHead);
-    this.body.pop();
+    if (!this.growOnStep) {
+      this.body.pop();
+    }
+    this.growOnStep = false;
   }
 }
