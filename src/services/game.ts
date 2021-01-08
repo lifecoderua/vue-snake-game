@@ -12,7 +12,7 @@ export class Game {
 
   collision = false;
 
-  speed = 500;
+  speed = 350;
 
   meatPosition!: Coord;
 
@@ -64,7 +64,6 @@ export class Game {
       this.onCollision();
     }
     this.setSnake();
-    console.log('Field updated', this.field);
 
     updateHandler(this);
   }
@@ -92,7 +91,6 @@ export class Game {
 
     if (this.field[y][x].type === 'meat') {
       this.snake.grow();
-      // TODO: put new piece
       this.generateMeat();
     }
   }

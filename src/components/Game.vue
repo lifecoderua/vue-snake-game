@@ -39,9 +39,7 @@ export default class Game extends Vue {
       snakeLength: 3,
     });
 
-    this.field = {
-      ...this.game.field,
-    };
+    this.field = this.game.field;
 
     this.$forceUpdate();
   }
@@ -50,14 +48,10 @@ export default class Game extends Vue {
     this.initGame();
 
     document.addEventListener('keydown', this.keyboardHandler);
-
-    console.log('Initialized with', this.game);
   }
 
   onGameUpdate(game: GameCore) {
-    this.field = {
-      ...game.field,
-    };
+    this.field = [ ...game.field ];
     this.$forceUpdate();
   }
 
