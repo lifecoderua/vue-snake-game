@@ -51,6 +51,10 @@
         &.snake-head {
           background-color: @theme-accent1;
         }
+
+        &.meat {
+          background-color: @theme-accent2;
+        }
       }
     }
   }

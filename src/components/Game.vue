@@ -29,7 +29,7 @@ const FIELD_SIZE = 15;
 export default class Game extends Vue {
   game!: GameCore;
 
-  field!: any;
+  field!: any[][];
 
   initGame() {
     console.log('Game init');

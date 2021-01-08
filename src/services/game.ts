@@ -1,15 +1,20 @@
 import { Snake } from '@/services/snake';
+import {Coord} from '@/types/coord';
 
 const COLLIDABLE_TYPES = ['snake'];
 
 export class Game {
   field: any[][] = [];
 
+  fieldSize: number;
+
   snake!: Snake;
 
   collision = false;
 
   speed = 500;
+
+  meatPosition!: Coord;
 
   loop!: any;
 
@@ -21,6 +26,20 @@ export class Game {
     this.initSnake(snakeLength, fieldSize);
     this.setSnake();
     this.collision = false;
+    this.fieldSize = fieldSize;
+    this.generateMeat();
+  }
+
+  generateMeat() {
+    this.meatPosition = {
+      x: 4,
+      y: 4,
+    };
+
+    this.field[this.meatPosition.y][this.meatPosition.x] = {
+      type: 'meat',
+      style: 'meat',
+    }
   }
 
   run(updateHandler: any) {
