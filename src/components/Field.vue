@@ -1,6 +1,4 @@
 <template>
-  <p>I am the field</p>
-  {{ field }}
   <div class="field">
     <div class="row"
          v-for="(row, i) in field"

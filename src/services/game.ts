@@ -1,9 +1,13 @@
 import { Snake } from '@/services/snake';
 
+const COLLIDABLE_TYPES = ['snake'];
+
 export class Game {
   field: any[][] = [];
 
   snake!: Snake;
+
+  collision = false;
 
   speed = 500;
 
@@ -16,6 +20,7 @@ export class Game {
     this.initField(fieldSize);
     this.initSnake(snakeLength, fieldSize);
     this.setSnake();
+    this.collision = false;
   }
 
   run(updateHandler: any) {
@@ -25,11 +30,16 @@ export class Game {
     this.loop = setInterval(() => this.nextStep(updateHandler), this.speed);
   }
 
+  onCollision() {
+    this.collision = true;
+    clearInterval(this.loop);
+    console.log('Loop stop. Collision!');
+  }
+
   nextStep(updateHandler: any) {
     this.snake.nextStep();
     if (this.snake.collision) {
-      clearInterval(this.loop);
-      console.log('Loop stop. Collision!');
+      this.onCollision();
     }
     this.setSnake();
     console.log('Field updated', this.field);
@@ -52,6 +62,12 @@ export class Game {
     this.snake = new Snake(snakeLength, fieldSize);
   }
 
+  private checkCollision(x: number, y: number) {
+    if (COLLIDABLE_TYPES.includes(this.field[y][x].type)) {
+      this.onCollision();
+    }
+  }
+
   private setSnake() {
     this.field.forEach((row, y) => {
       row.forEach((cell, x) => {
@@ -62,6 +78,8 @@ export class Game {
     })
 
     this.snake.body.forEach(({x, y}, i) => {
+      this.checkCollision(x, y);
+
       this.field[y][x] = {
         type: 'snake',
         style: i ? 'snake' : 'snake-head',

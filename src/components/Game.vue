@@ -1,10 +1,12 @@
 <template>
   <div class="hello">
     <h1>A little snake game</h1>
-    <p>
-      A little red hood snake game I am.
-    </p>
-    <p>You know what, the snake is: {{game.snake}}</p>
+
+    <div class="game-over" v-if="game.collision">
+      <h3>Game Over</h3>
+      <h4>Press any key to continue</h4>
+    </div>
+
     <Field :field="field"/>
   </div>
 </template>
@@ -60,7 +62,7 @@ export default class Game extends Vue {
   }
 
   keyboardHandler(e: KeyboardEvent) {
-    if (this.game.snake.collision) {
+    if (this.game.collision) {
       this.initGame();
       return;
     }
