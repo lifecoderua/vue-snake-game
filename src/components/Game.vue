@@ -61,12 +61,9 @@ export default class Game extends Vue {
       ArrowRight: Direction.right,
     }
 
-    console.log('keydown', e.code);
-
     const newDirection: any = controlCodes[e.code as any];
 
-    // debugger;
-    if (newDirection) {
+    if (newDirection !== undefined) {
       this.game.run(this.onGameUpdate);
       this.game.snake.setDirection(newDirection);
     }

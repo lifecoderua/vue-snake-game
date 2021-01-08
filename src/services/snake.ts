@@ -49,9 +49,10 @@ export class Snake {
   nextStep() {
     const nextCoordDelta = directionMove[this.direction];
 
+    // debugger;
     const newHead = {
-      x: this.head.x + nextCoordDelta.x,
-      y: this.head.y + nextCoordDelta.y,
+      x: this.head.x + (nextCoordDelta.x || 0),
+      y: this.head.y + (nextCoordDelta.y || 0),
     }
 
     // TODO: extract
