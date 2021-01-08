@@ -15,6 +15,10 @@ const directionMove: any = {
 export class Snake {
   direction!: Direction;
 
+  fieldSize!: number;
+
+  collision = false;
+
   // [head, body1, ..., tail]
   body: any[] = [];
 
@@ -22,6 +26,9 @@ export class Snake {
     // TODO: support greater snake length
     const startPointX = Math.floor(fieldSize / 2);
     const startPointY = startPointX;
+
+    this.collision = false;
+    this.fieldSize = fieldSize;
 
     this.body.unshift({
       x: startPointX,
@@ -45,6 +52,14 @@ export class Snake {
     const newHead = {
       x: this.head.x + nextCoordDelta.x,
       y: this.head.y + nextCoordDelta.y,
+    }
+
+    // TODO: extract
+    // TODO: body collision check
+    if (newHead.x < 0 || newHead.x >= this.fieldSize || newHead.y < 0 || newHead.y >= this.fieldSize) {
+      console.log('collision');
+      this.collision = true;
+      return;
     }
 
     this.body.unshift(newHead);

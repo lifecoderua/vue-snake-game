@@ -5,7 +5,7 @@
       A little red hood snake game I am.
     </p>
     <p>You know what, the snake is: {{game.snake}}</p>
-    <Field :field="game.field"/>
+    <Field :field="field"/>
   </div>
 </template>
 
@@ -27,6 +27,8 @@ const FIELD_SIZE = 15;
 export default class Game extends Vue {
   game!: GameCore;
 
+  field!: any;
+
   created() {
     console.log('Game init');
 
@@ -35,9 +37,20 @@ export default class Game extends Vue {
       snakeLength: 3,
     });
 
+    this.field = {
+      ...this.game.field,
+    };
+
     document.addEventListener('keydown', this.keyboardHandler);
 
     console.log('Initialized with', this.game);
+  }
+
+  onGameUpdate(game: GameCore) {
+    this.field = {
+      ...game.field,
+    };
+    this.$forceUpdate();
   }
 
   keyboardHandler(e: KeyboardEvent) {
@@ -54,7 +67,7 @@ export default class Game extends Vue {
 
     // debugger;
     if (newDirection) {
-      this.game.run();
+      this.game.run(this.onGameUpdate);
       this.game.snake.setDirection(newDirection);
     }
   }

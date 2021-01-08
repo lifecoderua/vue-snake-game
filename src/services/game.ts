@@ -18,17 +18,23 @@ export class Game {
     this.setSnake();
   }
 
-  run() {
+  run(updateHandler: any) {
     if (this.loop) { return; }
 
     console.log('RUN snakey RUN!');
-    this.loop = setInterval(() => this.nextStep(), this.speed);
+    this.loop = setInterval(() => this.nextStep(updateHandler), this.speed);
   }
 
-  nextStep() {
+  nextStep(updateHandler: any) {
     this.snake.nextStep();
+    if (this.snake.collision) {
+      clearInterval(this.loop);
+      console.log('Loop stop. Collision!');
+    }
     this.setSnake();
     console.log('Field updated', this.field);
+
+    updateHandler(this);
   }
 
   private initField(fieldSize: number) {
