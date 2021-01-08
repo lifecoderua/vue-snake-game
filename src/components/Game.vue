@@ -4,6 +4,7 @@
     <p>
       A little red hood snake game I am.
     </p>
+    <p>You know what, the snake is: {{game.snake}}</p>
     <Field :field="game.field"/>
   </div>
 </template>
@@ -12,6 +13,7 @@
 import { Options, Vue } from 'vue-class-component';
 import Field from '@/components/Field.vue';
 import {Game as GameCore} from '@/services/game.ts';
+import {Direction} from '@/services/snake';
 
 const FIELD_SIZE = 15;
 
@@ -23,10 +25,7 @@ const FIELD_SIZE = 15;
   },
 })
 export default class Game extends Vue {
-  // field: any[][] = [];
-
   game!: GameCore;
-
 
   created() {
     console.log('Game init');
@@ -36,7 +35,28 @@ export default class Game extends Vue {
       snakeLength: 3,
     });
 
+    document.addEventListener('keydown', this.keyboardHandler);
+
     console.log('Initialized with', this.game);
+  }
+
+  keyboardHandler(e: KeyboardEvent) {
+    const controlCodes: any = {
+      ArrowUp: Direction.up,
+      ArrowDown: Direction.down,
+      ArrowLeft: Direction.left,
+      ArrowRight: Direction.right,
+    }
+
+    console.log('keydown', e.code);
+
+    const newDirection: any = controlCodes[e.code as any];
+
+    // debugger;
+    if (newDirection) {
+      this.game.run();
+      this.game.snake.setDirection(newDirection);
+    }
   }
 }
 </script>
