@@ -30,10 +30,12 @@ export class Snake {
     this.collision = false;
     this.fieldSize = fieldSize;
 
-    this.body.unshift({
-      x: startPointX,
-      y: startPointY,
-    });
+    for (let i = 0; i < length; i++) {
+      this.body.push({
+        x: startPointX - i,
+        y: startPointY,
+      });
+    }
   }
 
   setDirection(newDirection: Direction) {
